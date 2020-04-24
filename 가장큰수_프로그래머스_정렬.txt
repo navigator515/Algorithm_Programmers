@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+bool compare(string &a,string &b)//sort 인수들이 pointer 이므로 주소로 매개변수를 받는다  //return 하는 대로 정렬이 된다.
+{
+    
+        return a+b>b+a;
+    
+}
+
+string solution(vector<int> numbers) {
+    string answer = "";
+    int i;
+    vector<string> string; //배열 새로 정의
+    for(i=0;i<numbers.size();i++)
+        string.push_back(to_string(numbers[i]));//정의한 배열에 담는다
+    
+    sort(string.begin(),string.end(),compare);//a+b or b+a 큰대로 정렬 
+    
+    for(auto iter=string.begin();iter<string.end();iter++)//iter 사용하여 answer에 저장
+        answer+=*iter;
+    
+    
+     if (answer[0] == '0')//0만 들어온 경우
+        answer = "0";
+    
+    
+    return answer;
+}
