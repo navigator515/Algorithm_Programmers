@@ -1,0 +1,48 @@
+//100점중에 정확성 33.3
+#include <string>
+#include <vector>
+#include<algorithm>
+using namespace std;
+
+int solution(int n, vector<int> lost, vector<int> reserve) {
+    int answer = 0;
+    /////total 에 정렬
+    vector<int> total;
+    total.assign(lost.begin(),lost.end());
+    total.assign(reserve.begin(),reserve.begin());
+    sort(total.begin(),total.end());
+    
+    int i,j;
+    int cnt=0;
+    answer=n-lost.size();//전체 학생수에서 잃어버린 갯수를 빼준다.
+    total.push_back(100);//index 0 은 미리 초기화
+    
+    for(i=0;i<n;i++)//전체학생수만큼 1을 넣어주고
+        total.push_back(1);
+    for(i=0;i<reserve.size();i++)//빌려줄 수 있는 학생은 2를 넣어준다
+        total[reserve.at(i)]=2;
+    
+    for(i=0;i<lost.size();i++)//잃어버린 학생은 0을 넣어준다
+        total[lost.at(i)]=0;
+    
+    for(i=1;i<total.size();i++)
+    {
+    if(total[i]==0&&total[i-1]==2)//잃어버린 사람이고, 옆 번호 친구가 2이면 빌려준다.
+	{
+        total[i]=1;
+        total[i-1]=1;
+        cnt++;//카운트 증가
+    	}
+        
+       if(total[i]==0&&total[i+1]==2)//잃어버린 사람이고, 뒷번호 친구가 2면 빌려준다.
+	{
+         total[i]=1;    
+         total[i+1]=1;
+         cnt++;
+         }
+        
+   }
+    
+    answer+=cnt;
+    return answer;
+}
