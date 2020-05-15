@@ -1,0 +1,44 @@
+#include <string>
+#include <vector>
+#include<queue>
+using namespace std;
+
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+    vector<int> answer;
+    queue<int> completion;//큐 선언    
+    int cnt=0;
+    int cnt_copy=0;//pop 된 갯수
+    int i;
+    
+    while(cnt_copy<progresses.size()){
+    for(i=0+cnt_copy;i<progresses.size();i++)//하루 일처리 
+    {
+        progresses[i]+=speeds[i];
+    }
+        while(!completion.empty())//큐 클리어//큐는 인덱스 접근이 안되므로
+        {
+            completion.pop();
+        }
+    for(i=0+cnt_copy;i<progresses.size();i++)//큐에 작업들을 옮겨 담는다.
+    {
+      completion.push(progresses[i]);
+    }
+        cnt=0;
+    for(i=0;i<completion.size();i++)
+    {
+        //큐 맨앞이 작업이 마무리된경우와 큐가 비어있지 않으면
+         if(completion.front()>=100&&!completion.empty()==1)
+         {
+            completion.pop();//배포
+            cnt++;
+             cnt_copy++;
+         }
+        
+    }
+        if(cnt>0)
+        answer.push_back(cnt);  //배포된 작업 수 push 
+    
+    }
+    return answer;
+}
