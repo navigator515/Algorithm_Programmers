@@ -1,0 +1,35 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int solution(vector<int> citations) {
+    int answer = 0;
+    int cnt=0;//인용된 숫자인 H 이상 만큼 인용된 논문 수 
+    int H=0; //H 
+    int i=0,j=0;
+    sort(citations.begin(),citations.end());//오름차순으로 정렬 후 앞에서부터 순차적으로 비교
+    
+    do//do while 문을 사용한 이유는 처음 H에 정렬된 배열의 첫번째 인자를 넣어야 비교하기 좋으므로
+    {
+    cnt=0;//카운트 초기화 
+    H=citations[j];//첫번째 인자 대입
+    
+    for(i=j;i<citations.size();i++)//cnt 계산 //j 로 H값을 조절한다.
+    {
+        if(H<=citations[i])//H와 비교하여 H이상 인용된 논문의 갯수를 cnt에 저장한다
+             cnt++;
+    }
+    if(H<cnt)//만약 H 값보다 인용된 갯수가 많다면 H값을 증가시켜서 다시 비교한다.
+        j++;//H 한칸 증가
+    
+    if(cnt<H)//만약 H가 H보다 큰 수보다 크다면 H에 cnt 를 넣어줘야한다. H가 cnt 보다 크면 안됨. 즉 H 값은 cnt 보다 크면 안됨.
+        H=cnt;
+    }while((H<cnt||H<citations.size()-cnt)&&H!=cnt);
+    //H보다 인용된 논문 갯수가 많거나 인용되지 않은 논문의 갯수가 H보다 작지만 H와 cnt 값이 같이 않을 때 반복한다. 
+    
+    answer=H;
+    
+    
+    return answer;
+}
