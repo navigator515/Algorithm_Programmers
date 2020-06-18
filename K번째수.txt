@@ -1,0 +1,34 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+    vector<int> answer;
+    vector<int> reassign;
+   int i=0,j,k;
+    int num;
+    int size=commands.size();
+
+ for(num=0;num<size;num++){
+    i=commands[num][0];
+    j=commands[num][1];
+    k=commands[num][2];
+   
+    if(i==j)// 범위가 숫자 하나 인 경우 그냥 그 값을 넣는다 
+   {
+    answer.push_back(array[i-1]);
+         continue;
+   }
+
+     //vector 원하는 만큼 복사
+   reassign.assign(array.begin()+(i-1),array.begin()+(j));
+ 
+     
+     //복사된 배열 정렬
+    sort(reassign.begin(),reassign.end());
+    answer.push_back(reassign[k-1]);
+     reassign.clear(); 
+ }
+    return answer;
+}
