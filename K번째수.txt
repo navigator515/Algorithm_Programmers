@@ -3,32 +3,32 @@
 #include <algorithm>
 using namespace std;
 
-vector<int> solution(vector<int> array, vector<vector<int>> commands) {
-    vector<int> answer;
-    vector<int> reassign;
-   int i=0,j,k;
-    int num;
-    int size=commands.size();
 
- for(num=0;num<size;num++){
-    i=commands[num][0];
-    j=commands[num][1];
-    k=commands[num][2];
-   
-    if(i==j)// 범위가 숫자 하나 인 경우 그냥 그 값을 넣는다 
-   {
-    answer.push_back(array[i-1]);
-         continue;
-   }
+bool compare(string &a,string &b)//sort 인수들이 pointer 이므로 주소로 매개변수를 받는다
+{
+    
+        return a+b>b+a;
+    
+}
 
-     //vector 원하는 만큼 복사
-   reassign.assign(array.begin()+(i-1),array.begin()+(j));
- 
-     
-     //복사된 배열 정렬
-    sort(reassign.begin(),reassign.end());
-    answer.push_back(reassign[k-1]);
-     reassign.clear(); 
- }
+string solution(vector<int> numbers) {
+    string answer = "";
+    int i;
+    vector<string> string;
+    for(i=0;i<numbers.size();i++)
+        string.push_back(to_string(numbers[i]));
+    
+    sort(string.begin(),string.end(),compare);
+    
+    for(auto iter=string.begin();iter<string.end();iter++)
+        answer+=*iter;
+    
+    
+    if(answer=="")
+        answer+="0";
+        
+    //다 똑같거나 ,다 0 일떄 예외처리 해줘야함.
+  
+    
     return answer;
 }
